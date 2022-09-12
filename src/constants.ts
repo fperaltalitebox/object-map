@@ -18,6 +18,7 @@ export const nestedObject = {
           label: {
             phone: {
               label: "Phone Number",
+              asd: "a",
             },
             homeAddress: {
               label: "Home Address",
@@ -29,6 +30,6 @@ export const nestedObject = {
     },
   },
   mapping: {
-    salesforceObjects: ["name", "contact1", "contact2", "contact3", "contact4"],
+    salesforceObjects: ["name", "custom.a"],
   },
 };

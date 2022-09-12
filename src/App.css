@@ -38,3 +38,45 @@
     transform: rotate(360deg);
   }
 }
+
+.flex {
+    position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.select {
+  margin-right: 100px;
+  font-size: 16px;
+  padding: 15px;
+  background-color: #E6F0FE;
+  color: black;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  width: 300px;
+}
+
+.btn-wrapper {
+  display: flex;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.btn {
+  margin-left: auto;
+  font-size: 16px;
+  padding: 15px;
+  background-color: #FB310A;
+  color: white;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+
+.code {
+ width: 100%;
+}

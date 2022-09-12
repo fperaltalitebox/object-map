@@ -84,3 +84,10 @@ const ExampleNonDynamic = () => {
 };
 
 export default ExampleNonDynamic;
+
+var output = {
+  id: "nr",
+  "contact.firstName": "name.first",
+  "contact.lastName": "name.last",
+  "contact.email": "email",
+};

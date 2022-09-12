@@ -1,26 +1,40 @@
 import React from "react";
-import DynamicJsonformsComponent from "./DynamicJsonformsComponent";
-import { nestedObject } from "./constants";
+import { MonacoEditor } from "@fusebit/monaco-jsonforms";
+import DynamicJsonformsV2 from "./DynamicJsonformsV2";
 
-const initObject: any = {
-  title: "Dynamic Example",
-  description:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  baseFields: {
-    name: {
-      label: "Name",
-      value: "Mike",
-    },
-    email: {
-      label: "Email",
-      value: "mfuster@litebox.ai",
+const budgetly = {
+  name: {
+    first: "fede",
+  },
+  customer: {
+    type: {
+      oportunity: "interested",
     },
   },
-  integrationKeys: ["customerName", "customerEmail"],
+};
+
+const salesforce = {
+  name: "fede",
+  type: {
+    oportunity: "interested",
+  },
 };
 
 const ExampleDynamic = () => {
-  return <DynamicJsonformsComponent object={initObject} />;
+  const outputFunc = (input: any) => {
+    return {};
+  };
+
+  return (
+    <div>
+      <DynamicJsonformsV2
+        title="Example"
+        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        baseObject={budgetly}
+        mapObject={salesforce}
+      />
+    </div>
+  );
 };
 
 export default ExampleDynamic;
