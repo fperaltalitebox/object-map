@@ -1,5 +1,4 @@
 import React from "react";
-import { MonacoEditor } from "@fusebit/monaco-jsonforms";
 import DynamicJsonformsV2 from "./DynamicJsonformsV2";
 
 const budgetly = {
@@ -21,10 +20,6 @@ const salesforce = {
 };
 
 const ExampleDynamic = () => {
-  const outputFunc = (input: any) => {
-    return {};
-  };
-
   return (
     <div>
       <DynamicJsonformsV2

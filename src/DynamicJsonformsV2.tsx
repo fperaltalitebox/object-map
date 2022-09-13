@@ -107,15 +107,19 @@ const DynamicJsonformsV2 = ({
       const val = key.replace(":selector", "").replaceAll(":", ".");
       objectToReturn = {
         ...objectToReturn,
-        [mapToKey]: `input.${val}`,
+        [val]: `#input.${mapToKey}#`,
       };
     });
-    const outputFunction = `const output = () => ${JSON.stringify(
-      objectToReturn
-    )}`;
+    const outputFunction = `(input) => {
+        return ${JSON.stringify(objectToReturn)
+          .replaceAll('#"', "")
+          .replaceAll('"#', "")}
+    }`;
     setFunctions([...functions, outputFunction]);
     setSelectedFunction(outputFunction);
   };
+
+  const func = eval(selectedFunction);
 
   return (
     <div>
@@ -123,6 +127,10 @@ const DynamicJsonformsV2 = ({
         <>
           <h1>{title}</h1>
           <p>{description}</p>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <pre>{JSON.stringify(baseObject)}</pre>
+            <pre>{JSON.stringify(mapObject)}</pre>
+          </div>
           <JsonForms
             data={data}
             schema={schema}
@@ -163,6 +171,7 @@ const DynamicJsonformsV2 = ({
               </div>
             </div>
           )}
+          <pre>{JSON.stringify(func?.(mapObject))}</pre>
         </>
       )}
     </div>
