@@ -1,32 +1,20 @@
 import React from "react";
-import DynamicJsonformsV2 from "./DynamicJsonformsV2";
-
-const budgetly = {
-  name: {
-    first: "fede",
-  },
-  customer: {
-    type: {
-      oportunity: "interested",
-    },
-  },
-};
-
-const salesforce = {
-  name: "fede",
-  type: {
-    oportunity: "interested",
-  },
-};
+import DynamicJsonformsV3 from "./DynamicJsonformsV3";
+import {
+  leadJsonSchema,
+  customerJsonSchema,
+  sourceToTransformation,
+} from "./constants";
 
 const ExampleDynamic = () => {
   return (
     <div>
-      <DynamicJsonformsV2
+      <DynamicJsonformsV3
         title="Example"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        baseObject={budgetly}
-        mapObject={salesforce}
+        baseObject={customerJsonSchema}
+        mapObject={leadJsonSchema}
+        sourceToTransformation={sourceToTransformation}
       />
     </div>
   );

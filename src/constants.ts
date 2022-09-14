@@ -1,35 +1,63 @@
-export const nestedObject = {
-  configuration: {
-    input: {
-      contact: {
-        firstName: {
-          label: "First Name",
-          required: true,
-        },
-        lastName: {
-          label: "Last Name",
-          required: true,
-        },
-        email: {
-          label: "Email Address",
-          required: true,
-        },
-        additionalContact: {
-          label: {
-            phone: {
-              label: "Phone Number",
-              asd: "a",
-            },
-            homeAddress: {
-              label: "Home Address",
-            },
-          },
-          required: false,
+export const leadJsonSchema = {
+  type: "object",
+  properties: {
+    Title: {
+      type: "string",
+      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+    },
+    First: {
+      type: "string",
+      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+    },
+    Last: {
+      type: "string",
+      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+    },
+    Organization: {
+      type: "string",
+      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+    },
+    "Citizenship.Region.state": {
+      type: "string",
+      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+    },
+  },
+};
+
+export const customerJsonSchema = {
+  type: "object",
+  title: "Budgetly Customer",
+  properties: {
+    Title: {
+      type: "string",
+    },
+    First: {
+      type: "string",
+    },
+    Last: {
+      type: "string",
+    },
+    Organization: {
+      type: "string",
+    },
+    Citizenship: {
+      Region: {
+        state: {
+          type: "string",
         },
       },
     },
   },
-  mapping: {
-    salesforceObjects: ["name", "custom.a"],
+};
+
+export const sourceToTransformation = {
+  Title: "Mr",
+  First: "Shehzad",
+  Last: "Akbar",
+  Organization: "Fusebit",
+  Citizenship: {
+    Region: {
+      state: "Toronto",
+    },
   },
 };
