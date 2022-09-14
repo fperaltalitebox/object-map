@@ -1,25 +1,22 @@
 export const leadJsonSchema = {
   type: "object",
+  title: "Salesforce Lead",
   properties: {
-    Title: {
+    Salutation: {
       type: "string",
-      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+      title: "The Lead's salutation",
     },
-    First: {
+    FirstName: {
       type: "string",
-      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+      title: "The Lead's first name",
     },
-    Last: {
+    LastName: {
       type: "string",
-      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+      title: "The Lead's last name",
     },
-    Organization: {
+    Company: {
       type: "string",
-      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
-    },
-    "Citizenship.Region.state": {
-      type: "string",
-      enum: ["Salutation", "FirstName", "LastName", "Company", "Base"],
+      title: "The Lead's company name",
     },
   },
 };
@@ -40,13 +37,6 @@ export const customerJsonSchema = {
     Organization: {
       type: "string",
     },
-    Citizenship: {
-      Region: {
-        state: {
-          type: "string",
-        },
-      },
-    },
   },
 };
 
@@ -55,9 +45,4 @@ export const sourceToTransformation = {
   First: "Shehzad",
   Last: "Akbar",
   Organization: "Fusebit",
-  Citizenship: {
-    Region: {
-      state: "Toronto",
-    },
-  },
 };

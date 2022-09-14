@@ -1,15 +1,15 @@
 import React from "react";
-import DynamicJsonformsV3 from "./DynamicJsonformsV3";
 import {
   leadJsonSchema,
   customerJsonSchema,
   sourceToTransformation,
 } from "./constants";
+import DynamicJsonformsV4 from "./DynamicJsonformsV4";
 
 const ExampleDynamic = () => {
   return (
     <div>
-      <DynamicJsonformsV3
+      <DynamicJsonformsV4
         title="Example"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         baseObject={customerJsonSchema}
