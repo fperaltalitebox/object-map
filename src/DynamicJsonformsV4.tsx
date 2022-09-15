@@ -10,7 +10,7 @@ import dot from "dot-object";
 interface Props {
   title: string;
   description: string;
-  baseObject: { [key: string]: any };
+  readOnlyObject: { [key: string]: any };
   mapObject: { [key: string]: any };
   sourceToTransformation: { [key: string]: any };
 }
@@ -18,43 +18,47 @@ interface Props {
 const DynamicJsonformsV4 = ({
   title,
   description,
-  baseObject,
+  readOnlyObject,
   mapObject,
   sourceToTransformation,
 }: Props) => {
   const [recipe, setRecipe] = useState();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [baseObjectUiSchema, setBaseObjectUiSchema] = useState();
-  const [mapObjectSchema, setMapObjectSchema] = useState();
+  const [uischema, setUischema] = useState();
+  const [schema, setSchema] = useState();
 
   useEffect(() => {
     const mapObjectEnum: string[] = [];
 
     Object.keys(dot.dot(mapObject.properties)).forEach(async (key) => {
       const splittedKey = key.split(".");
-      const objectKey = splittedKey.slice(0, splittedKey.length - 1).join("/");
+      const objectKey = splittedKey.slice(0, splittedKey.length - 1).join(".");
       const isObjectKeyInEnum = mapObjectEnum.includes(objectKey);
       if (!isObjectKeyInEnum) {
         mapObjectEnum.push(objectKey);
       }
     });
 
-    const newBaseObjectUiSchema: any = {
+    const newUiSchema: any = {
       type: "VerticalLayout",
       elements: [],
     };
 
-    const newMapObjectSchema: any = {
+    const newSchema: any = {
       type: "object",
       properties: {},
     };
 
-    Object.keys(dot.dot(baseObject.properties)).forEach(async (key) => {
+    Object.keys(dot.dot(readOnlyObject.properties)).forEach(async (key) => {
       const splittedKey = key.split(".");
-      const objectKey = splittedKey.slice(0, splittedKey.length - 1).join("/");
+      const propKey = splittedKey.slice(0, splittedKey.length - 1).join("/");
 
-      const mapOBjectSchemaProperty = {
-        [objectKey]: {
+      const schemaProperties = {
+        [`${propKey}ReadOnly`]: {
+          type: "string",
+          title: propKey.replaceAll("/", " "),
+        },
+        [propKey]: {
           type: "string",
           enum: mapObjectEnum,
         },
@@ -65,53 +69,45 @@ const DynamicJsonformsV4 = ({
         elements: [
           {
             type: "Control",
-            scope: `#/properties/${objectKey}`,
+            scope: `#/properties/${propKey}ReadOnly`,
             options: {
               readonly: true,
             },
           },
+          {
+            type: "Control",
+            scope: `#/properties/${propKey}`,
+          },
         ],
       };
 
-      newMapObjectSchema.properties = {
-        ...newMapObjectSchema.properties,
-        ...mapOBjectSchemaProperty,
+      newSchema.properties = {
+        ...newSchema.properties,
+        ...schemaProperties,
       };
-      newBaseObjectUiSchema.elements.push(uiSchemaElements);
+      newUiSchema.elements.push(uiSchemaElements);
     });
 
-    setBaseObjectUiSchema(newBaseObjectUiSchema);
-    setMapObjectSchema(newMapObjectSchema);
-
-    console.log(newMapObjectSchema);
-  }, [baseObject, mapObject]);
+    setSchema(newSchema);
+    setUischema(newUiSchema);
+  }, [readOnlyObject, mapObject]);
 
   return (
     <div>
-      {baseObjectUiSchema && mapObjectSchema && (
+      {schema && uischema && (
         <>
           <h1>{title}</h1>
           <p>{description}</p>
-          <div style={{ display: "flex" }}>
-            <div style={{ marginRight: "40px", width: "100%" }}>
-              <JsonForms
-                data={{}}
-                schema={baseObject}
-                uischema={baseObjectUiSchema}
-                cells={materialCells}
-                renderers={[...materialRenderers, MonacoEditorControl]}
-              />
-            </div>
-            <JsonForms
-              data={recipe}
-              schema={mapObjectSchema}
-              cells={materialCells}
-              renderers={[...materialRenderers, MonacoEditorControl]}
-              onChange={(data) => {
-                setRecipe(data.data);
-              }}
-            />
-          </div>
+          <JsonForms
+            data={recipe}
+            schema={schema}
+            uischema={uischema}
+            cells={materialCells}
+            renderers={[...materialRenderers, MonacoEditorControl]}
+            onChange={(data) => {
+              setRecipe(data.data);
+            }}
+          />
           <div className="btn-wrapper">
             <button
               className="btn"

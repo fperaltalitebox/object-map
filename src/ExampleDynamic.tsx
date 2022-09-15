@@ -12,7 +12,7 @@ const ExampleDynamic = () => {
       <DynamicJsonformsV4
         title="Example"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        baseObject={customerJsonSchema}
+        readOnlyObject={customerJsonSchema}
         mapObject={leadJsonSchema}
         sourceToTransformation={sourceToTransformation}
       />
