@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { JsonForms } from "@jsonforms/react";
 import {
   materialRenderers,
@@ -10,87 +10,20 @@ import dot from "dot-object";
 interface Props {
   title: string;
   description: string;
-  readOnlyObject: { [key: string]: any };
-  mapObject: { [key: string]: any };
-  sourceToTransformation: { [key: string]: any };
+  schema: any;
+  uischema: any;
+  sourceToTransformation: any;
 }
 
 const DynamicJsonformsV4 = ({
   title,
   description,
-  readOnlyObject,
-  mapObject,
+  uischema,
+  schema,
   sourceToTransformation,
 }: Props) => {
   const [recipe, setRecipe] = useState();
   const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [uischema, setUischema] = useState();
-  const [schema, setSchema] = useState();
-
-  useEffect(() => {
-    const mapObjectEnum: string[] = [];
-
-    Object.keys(dot.dot(mapObject.properties)).forEach(async (key) => {
-      const splittedKey = key.split(".");
-      const objectKey = splittedKey.slice(0, splittedKey.length - 1).join(".");
-      const isObjectKeyInEnum = mapObjectEnum.includes(objectKey);
-      if (!isObjectKeyInEnum) {
-        mapObjectEnum.push(objectKey);
-      }
-    });
-
-    const newUiSchema: any = {
-      type: "VerticalLayout",
-      elements: [],
-    };
-
-    const newSchema: any = {
-      type: "object",
-      properties: {},
-    };
-
-    Object.keys(dot.dot(readOnlyObject.properties)).forEach(async (key) => {
-      const splittedKey = key.split(".");
-      const propKey = splittedKey.slice(0, splittedKey.length - 1).join("/");
-
-      const schemaProperties = {
-        [`${propKey}ReadOnly`]: {
-          type: "string",
-          title: propKey.replaceAll("/", " "),
-        },
-        [propKey]: {
-          type: "string",
-          enum: mapObjectEnum,
-        },
-      };
-
-      const uiSchemaElements = {
-        type: "HorizontalLayout",
-        elements: [
-          {
-            type: "Control",
-            scope: `#/properties/${propKey}ReadOnly`,
-            options: {
-              readonly: true,
-            },
-          },
-          {
-            type: "Control",
-            scope: `#/properties/${propKey}`,
-          },
-        ],
-      };
-
-      newSchema.properties = {
-        ...newSchema.properties,
-        ...schemaProperties,
-      };
-      newUiSchema.elements.push(uiSchemaElements);
-    });
-
-    setSchema(newSchema);
-    setUischema(newUiSchema);
-  }, [readOnlyObject, mapObject]);
 
   return (
     <div>

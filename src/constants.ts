@@ -1,3 +1,4 @@
+// this schema is read only
 export const leadJsonSchema = {
   type: "object",
   title: "Salesforce Lead",
@@ -21,6 +22,7 @@ export const leadJsonSchema = {
   },
 };
 
+// this schema gets mapped
 export const customerJsonSchema = {
   type: "object",
   title: "Budgetly Customer",
@@ -40,6 +42,7 @@ export const customerJsonSchema = {
   },
 };
 
+// this is some sample data that will get transformed
 export const sourceToTransformation = {
   Title: "Mr",
   First: "Shehzad",
