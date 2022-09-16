@@ -23,16 +23,15 @@ const DynamicJsonformsV4 = ({
   uischema,
   data,
   schema,
-  sourceToTransformation
+  sourceToTransformation,
+  onSubmit
 }: Props) => {
-  const [recipe, setRecipe] = useState();
+  const [submitData, setSubmitData] = useState();
 
   return (
     <div>
       {schema && uischema && (
         <>
-          <h1>{title}</h1>
-          <p>{description}</p>
           <JsonForms
             data={data}
             schema={schema}
@@ -44,38 +43,33 @@ const DynamicJsonformsV4 = ({
                 return;
               }
 
-              const test = data.data.mappingKey.reduce(
-                //@ts-ignore
-                (acc, { budgetly, salesforce }) => {
-                  acc[budgetly] = salesforce;
-                  return acc;
-                },
-                {}
-              );
-
-              setRecipe(test);
+              setSubmitData(data.data);
             }}
           />
-          {recipe && (
+          <button
+            className="btn"
+            onClick={() => {
+              if (submitData) {
+                onSubmit?.(submitData);
+              }
+            }}
+          >
+            Create Recipe
+          </button>
+          {submitData && (
             <>
-              <h4>
-                This is the payload that will be saved in the install data
-              </h4>
-              <div style={{ marginBottom: "40px" }}>
-                Recipe: {JSON.stringify(dot.dot(recipe), null, "\t")}
-              </div>
               <h4>This is the source data</h4>
               <div style={{ marginBottom: "40px" }}>
-                Source: {JSON.stringify(sourceToTransformation, null, "\t")}
+                {JSON.stringify(sourceToTransformation, null, "\t")}
               </div>
-              <h4>
-                This is the result of using the recipe on the source data with
-                dot-object
-              </h4>
+              <h4>This is the submitData:</h4>
+              <div style={{ marginBottom: "40px" }}>
+                {JSON.stringify(dot.dot(submitData), null, "\t")}
+              </div>
+              <h4>This is the transformed data</h4>
               <div>
-                Transformed Data:{" "}
                 {JSON.stringify(
-                  dot.transform(dot.dot(recipe), sourceToTransformation),
+                  dot.transform(dot.dot(submitData), sourceToTransformation),
                   null,
                   "\t"
                 )}

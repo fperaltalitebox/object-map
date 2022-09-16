@@ -1,17 +1,17 @@
-const budgetly = {
+const source = {
   name: {
     first: "fede",
   },
 };
 
-const salesforce = {
+const target = {
   name: "fede",
   custom: {
     a: "b",
   },
 };
 
-const output = {
+const target = {
   "name.first": "name",
 };
 

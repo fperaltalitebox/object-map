@@ -3,17 +3,17 @@ export const createSchema = ({ source, target }) => {
     const schema = {
         type: "object",
         properties: {
-            mappingKey: {
+            keys: {
                 type: "array",
                 items: {
                     type: "object",
-                    required: ["salesforce", "budgetly"],
+                    required: ["target", "source"],
                     properties: {
-                        budgetly: {
+                        source: {
                             type: "string",
                             enum: Object.keys(source.properties),
                         },
-                        salesforce: {
+                        target: {
                             type: "string",
                             enum: Object.keys(target.properties)
                         }
@@ -25,20 +25,22 @@ export const createSchema = ({ source, target }) => {
 
     return {
         schema: schema,
-        mappingKey: Object.keys(source.properties).map(
+        keys: Object.keys(source.properties).map(
             key => ({
-                budgetly: key
+                source: key
             })
         )
     }
 }
 
-export const createRecipe = ({ jsonFormData, key }) => {
-    return jsonFormData?.data?.[key].reduce(
+export const createRecipe = (data: any) => {
+    return data.keys.reduce(
+        //@ts-ignore
         (acc, { source, target }) => {
             acc[source] = target;
             return acc;
         },
         {}
-    )
+    );
 }
+

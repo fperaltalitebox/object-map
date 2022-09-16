@@ -13,26 +13,27 @@ const uischema = {
   elements: [
     {
       type: "Control",
-      scope: "#/properties/mappingKey"
+      scope: "#/properties/keys"
     }
   ]
 };
 
-const { mappingKey, schema } = sdk.createSchema({
+const { keys, schema } = sdk.createSchema({
   source: customerJsonSchema,
   target: leadJsonSchema
 });
 
 const ExampleDynamic = () => {
   const handleSubmit = (data: any) => {
-    console.log(data);
+    const recipe = sdk.createRecipe(data);
+    console.log("recipe", recipe);
   };
 
   return (
     <div>
       <DynamicJsonformsV4
         onSubmit={handleSubmit}
-        data={{ mappingKey }}
+        data={{ keys }}
         uischema={uischema}
         title="Example"
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."

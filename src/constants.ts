@@ -47,11 +47,11 @@ const _schema = {
       items: {
         type: "object",
         properties: {
-          budgetly: {
+          source: {
             type: "string",
             enum: ["first.name", "last.name"]
           },
-          salesforce: {
+          target: {
             type: "string",
             enum: ["firstName", "lastName"]
           }

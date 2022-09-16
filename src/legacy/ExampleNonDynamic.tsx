@@ -85,7 +85,7 @@ const ExampleNonDynamic = () => {
 
 export default ExampleNonDynamic;
 
-var output = {
+var target = {
   id: "nr",
   "contact.firstName": "name.first",
   "contact.lastName": "name.last",
