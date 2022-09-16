@@ -1,28 +1,4 @@
 // this schema is read only
-export const leadJsonSchema = {
-  type: "object",
-  title: "Salesforce Lead",
-  properties: {
-    Salutation: {
-      type: "string",
-      title: "The Lead's salutation",
-    },
-    FirstName: {
-      type: "string",
-      title: "The Lead's first name",
-    },
-    LastName: {
-      type: "string",
-      title: "The Lead's last name",
-    },
-    Company: {
-      type: "string",
-      title: "The Lead's company name",
-    },
-  },
-};
-
-// this schema gets mapped
 export const customerJsonSchema = {
   type: "object",
   title: "Budgetly Customer",
@@ -41,6 +17,84 @@ export const customerJsonSchema = {
     },
   },
 };
+
+// this schema gets mapped
+export const leadJsonSchema = {
+  type: "object",
+  title: "Salesforce Lead",
+  properties: {
+    Salutation: {
+      type: "string",
+    },
+    FirstName: {
+      type: "string",
+    },
+    LastName: {
+      type: "string",
+    },
+    Company: {
+      type: "string",
+    },
+  },
+};
+
+
+const _schema = {
+  type: "object",
+  properties: {
+    keys: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          budgetly: {
+            type: "string",
+            enum: ["first.name", "last.name"]
+          },
+          salesforce: {
+            type: "string",
+            enum: ["firstName", "lastName"]
+          }
+        }
+      }
+    }
+  }
+};
+
+
+export const magicFunction = (schema1: any, schema2: any) => {
+  return {
+    type: "object",
+    properties: {
+      keys: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            left: {
+              type: "string",
+              enum: Object.keys(schema1.properties)
+            },
+            right: {
+              type: "string",
+              enum: Object.keys(schema2.properties)
+            },
+          },
+        },
+      }
+    }
+  }
+}
+
+magicFunction(customerJsonSchema, leadJsonSchema)
+
+
+
+
+
+
+
+
 
 // this is some sample data that will get transformed
 export const sourceToTransformation = {

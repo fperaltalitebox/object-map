@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { JsonForms } from "@jsonforms/react";
 import {
   materialRenderers,
-  materialCells,
+  materialCells
 } from "@jsonforms/material-renderers";
 import { MonacoEditorControl } from "@fusebit/monaco-jsonforms";
 import dot from "dot-object";
@@ -13,17 +13,19 @@ interface Props {
   schema: any;
   uischema: any;
   sourceToTransformation: any;
+  onSubmit?: (data: any) => void;
+  data?: any;
 }
 
 const DynamicJsonformsV4 = ({
   title,
   description,
   uischema,
+  data,
   schema,
-  sourceToTransformation,
+  sourceToTransformation
 }: Props) => {
   const [recipe, setRecipe] = useState();
-  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   return (
     <div>
@@ -32,26 +34,29 @@ const DynamicJsonformsV4 = ({
           <h1>{title}</h1>
           <p>{description}</p>
           <JsonForms
-            data={recipe}
+            data={data}
             schema={schema}
             uischema={uischema}
             cells={materialCells}
             renderers={[...materialRenderers, MonacoEditorControl]}
-            onChange={(data) => {
-              setRecipe(data.data);
+            onChange={data => {
+              if ((data?.errors || []).length > 0) {
+                return;
+              }
+
+              const test = data.data.mappingKey.reduce(
+                //@ts-ignore
+                (acc, { budgetly, salesforce }) => {
+                  acc[budgetly] = salesforce;
+                  return acc;
+                },
+                {}
+              );
+
+              setRecipe(test);
             }}
           />
-          <div className="btn-wrapper">
-            <button
-              className="btn"
-              onClick={() => {
-                setHasSubmitted(true);
-              }}
-            >
-              Submit
-            </button>
-          </div>
-          {hasSubmitted && (
+          {recipe && (
             <>
               <h4>
                 This is the payload that will be saved in the install data
