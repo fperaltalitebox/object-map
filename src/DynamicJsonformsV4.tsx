@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { JsonForms } from "@jsonforms/react";
 import {
   materialRenderers,
-  materialCells
+  materialCells,
 } from "@jsonforms/material-renderers";
 import { MonacoEditorControl } from "@fusebit/monaco-jsonforms";
-import dot from "dot-object";
 
 interface Props {
   title: string;
@@ -17,28 +16,20 @@ interface Props {
   data?: any;
 }
 
-const DynamicJsonformsV4 = ({
-  title,
-  description,
-  uischema,
-  data,
-  schema,
-  sourceToTransformation,
-  onSubmit
-}: Props) => {
-  const [submitData, setSubmitData] = useState();
+const DynamicJsonformsV4 = ({ uischema, data, schema, onSubmit }: Props) => {
+  const [submitData, setSubmitData] = useState<any>();
 
   return (
     <div>
       {schema && uischema && (
         <>
           <JsonForms
-            data={data}
+            data={submitData || data}
             schema={schema}
             uischema={uischema}
             cells={materialCells}
             renderers={[...materialRenderers, MonacoEditorControl]}
-            onChange={data => {
+            onChange={(data) => {
               if ((data?.errors || []).length > 0) {
                 return;
               }
@@ -56,26 +47,6 @@ const DynamicJsonformsV4 = ({
           >
             Create Recipe
           </button>
-          {submitData && (
-            <>
-              <h4>This is the source data</h4>
-              <div style={{ marginBottom: "40px" }}>
-                {JSON.stringify(sourceToTransformation, null, "\t")}
-              </div>
-              <h4>This is the submitData:</h4>
-              <div style={{ marginBottom: "40px" }}>
-                {JSON.stringify(dot.dot(submitData), null, "\t")}
-              </div>
-              <h4>This is the transformed data</h4>
-              <div>
-                {JSON.stringify(
-                  dot.transform(dot.dot(submitData), sourceToTransformation),
-                  null,
-                  "\t"
-                )}
-              </div>
-            </>
-          )}
         </>
       )}
     </div>
