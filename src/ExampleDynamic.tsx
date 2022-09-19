@@ -8,6 +8,7 @@ import {
 import DynamicJsonformsV4 from "./DynamicJsonformsV4";
 import * as sdk from "./utils/sdk";
 import dot from "dot-object";
+import { MonacoEditor } from "@fusebit/monaco-jsonforms";
 
 const uischema = {
   type: "VerticalLayout",
@@ -33,7 +34,7 @@ const ExampleDynamic = () => {
   });
 
   return (
-    <div>
+    <div style={{ paddingBottom: "100px" }}>
       <DynamicJsonformsV4
         onSubmit={handleSubmit}
         data={data}
@@ -44,23 +45,42 @@ const ExampleDynamic = () => {
         <>
           <h4>This is the schema</h4>
           <div style={{ marginBottom: "40px" }}>
-            {JSON.stringify(schema, null, "\t")}
+            <MonacoEditor
+              value={JSON.stringify(schema, null, "\t")}
+              onChange={() => {}}
+              language="json"
+            />
           </div>
           <h4>This is the source data</h4>
           <div style={{ marginBottom: "40px" }}>
-            {JSON.stringify(sourceToTransformation, null, "\t")}
+            <MonacoEditor
+              value={JSON.stringify(sourceToTransformation, null, "\t")}
+              onChange={() => {}}
+              isExpandable
+              language="json"
+            />
           </div>
           <h4>This is the submitData:</h4>
           <div style={{ marginBottom: "40px" }}>
-            {JSON.stringify(dot.dot(recipe), null, "\t")}
+            <MonacoEditor
+              value={JSON.stringify(dot.dot(recipe), null, "\t")}
+              onChange={() => {}}
+              isExpandable
+              language="json"
+            />
           </div>
           <h4>This is the transformed data</h4>
           <div>
-            {JSON.stringify(
-              dot.transform(dot.dot(recipe), sourceToTransformation),
-              null,
-              "\t"
-            )}
+            <MonacoEditor
+              value={JSON.stringify(
+                dot.transform(dot.dot(recipe), sourceToTransformation),
+                null,
+                "\t"
+              )}
+              onChange={() => {}}
+              isExpandable
+              language="json"
+            />
           </div>
         </>
       )}
