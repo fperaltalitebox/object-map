@@ -1,10 +1,11 @@
-// this schema is read only
+// this schema is the source
 export const customerJsonSchema = {
   type: "object",
   title: "Budgetly Customer",
   properties: {
     Title: {
       type: "string",
+      label: "Budgetly Title",
     },
     First: {
       type: "string",
@@ -21,6 +22,7 @@ export const customerJsonSchema = {
           properties: {
             here: {
               type: "string",
+              label: "Budgetly Nested Property",
             },
           },
         },
@@ -29,13 +31,14 @@ export const customerJsonSchema = {
   },
 };
 
-// this schema gets mapped
+// this schema is the target
 export const leadJsonSchema = {
   type: "object",
   title: "Salesforce Lead",
   properties: {
     Salutation: {
       type: "string",
+      label: "Salesforce Salutation",
     },
     FirstName: {
       type: "string",
@@ -62,6 +65,7 @@ export const leadJsonSchema = {
                   },
                   superNestedSecondKey: {
                     type: "string",
+                    label: "Salesforce Nested Label",
                   },
                 },
               },

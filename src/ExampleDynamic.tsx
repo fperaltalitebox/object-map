@@ -13,7 +13,7 @@ const uischema = {
   type: "VerticalLayout",
   elements: [
     {
-      type: "Control",
+      type: "Dynamic",
       scope: "#/properties/keys",
     },
   ],
@@ -27,26 +27,25 @@ const ExampleDynamic = () => {
     setRecipe(recipe);
   };
 
-  const { keys, schema } = sdk.createSchema({
+  const { data, schema } = sdk.createSchema({
     source: customerJsonSchema,
     target: leadJsonSchema,
   });
-
-  console.log("keys:", keys);
 
   return (
     <div>
       <DynamicJsonformsV4
         onSubmit={handleSubmit}
-        data={{ keys }}
+        data={data}
         uischema={uischema}
-        title="Example"
-        description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         schema={schema}
-        sourceToTransformation={sourceToTransformation}
       />
       {recipe && (
         <>
+          <h4>This is the schema</h4>
+          <div style={{ marginBottom: "40px" }}>
+            {JSON.stringify(schema, null, "\t")}
+          </div>
           <h4>This is the source data</h4>
           <div style={{ marginBottom: "40px" }}>
             {JSON.stringify(sourceToTransformation, null, "\t")}

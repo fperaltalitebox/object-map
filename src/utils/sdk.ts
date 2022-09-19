@@ -11,16 +11,27 @@ const generateEnum = (schema) => {
   const schemaEnum = [];
 
   Object.keys(dot.dot(schema.properties)).forEach((key) => {
-    const objectKey = parseKey(key);
-    if (!schemaEnum.includes(objectKey)) {
-      schemaEnum.push(objectKey);
+    const value = parseKey(key);
+    const splittedKey = key.split(".");
+    const baseKey = splittedKey.slice(0, splittedKey.length - 1).join(".");
+    const objectProperties = dot.pick(baseKey, schema.properties);
+    const baseObject = { value, ...objectProperties };
+    const isEnumIncluded = schemaEnum.find((val) => val.value === value);
+    if (!isEnumIncluded) {
+      schemaEnum.push(baseObject);
     }
   });
 
   return schemaEnum;
 };
 
-export const createSchema = ({ source, target }) => {
+export const createSchema = ({
+  source,
+  target,
+}: {
+  source: any;
+  target: any;
+}) => {
   const sourceEnum = generateEnum(source);
   const targetEnum = generateEnum(target);
 
@@ -31,14 +42,16 @@ export const createSchema = ({ source, target }) => {
         type: "array",
         items: {
           type: "object",
-          required: ["target", "source"],
+          required: ["target"],
           properties: {
             source: {
-              type: "string",
+              type: "object",
+              title: source?.title,
               enum: sourceEnum,
             },
             target: {
-              type: "string",
+              type: "object",
+              title: target?.title,
               enum: targetEnum,
             },
           },
@@ -49,15 +62,17 @@ export const createSchema = ({ source, target }) => {
 
   return {
     schema: schema,
-    keys: sourceEnum.map((val) => ({ source: val })),
+    data: { keys: sourceEnum.map((val) => ({ source: val })) },
   };
 };
 
 export const createRecipe = (data: any) => {
+  console.log("data", data);
+
   return data.keys.reduce(
     //@ts-ignore
     (acc, { source, target }) => {
-      acc[source] = target;
+      acc[source.value] = target.value;
       return acc;
     },
     {}

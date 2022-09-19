@@ -66,7 +66,6 @@
 }
 
 .btn {
-  margin-left: auto;
   font-size: 16px;
   padding: 15px;
   background-color: #FB310A;
@@ -74,6 +73,8 @@
   border: none;
   border-radius: 40px;
   cursor: pointer;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 
