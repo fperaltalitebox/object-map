@@ -10,6 +10,15 @@ import {
 import Row from "./Row";
 import dot from "dot-object";
 import * as sdk from "../utils/sdk";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
+  TableHead,
+  TableContainer,
+  Paper,
+} from "@material-ui/core";
 
 interface Enum {
   value: string;
@@ -71,45 +80,53 @@ const DynamicControlVanillaRenderer = ({
   return (
     <div style={{ width: "1100px", margin: "0 auto" }}>
       <h2 style={{ width: "max-content" }}>Base Table</h2>
-      <table>
-        <thead>
-          <tr>
-            {Object.keys(baseTable).map((val) => (
-              <th key={val}>{val}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {Object.keys(baseTable).map((val) => (
-              <td key={val}>
-                {dot.pick(val, rootSchema.properties.dataToTransform)}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              {Object.keys(baseTable).map((val) => (
+                <TableCell style={{ fontWeight: 600 }} key={val}>
+                  {val}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <TableRow>
+              {Object.keys(baseTable).map((val) => (
+                <TableCell key={val}>
+                  {dot.pick(val, rootSchema.properties.dataToTransform)}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
       {Object.keys(tranformedTable).length > 0 && (
         <>
           <h2 style={{ width: "max-content" }}>Transformed Table</h2>
-          <table>
-            <thead>
-              <tr>
-                {Object.keys(dot.dot(tranformedTable)).map((val) => (
-                  <td key={val}>{val}</td>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {Object.keys(tranformedTable).map((val) => (
-                  <td key={val}>
-                    {JSON.stringify(dot.pick(val, tranformedTable))}
-                  </td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+          <TableContainer component={Paper}>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {Object.keys(dot.dot(tranformedTable)).map((val) => (
+                    <TableCell style={{ fontWeight: 600 }} key={val}>
+                      {val}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow>
+                  {Object.keys(tranformedTable).map((val) => (
+                    <TableCell key={val}>
+                      {JSON.stringify(dot.pick(val, tranformedTable))}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
         </>
       )}
       <div style={{ display: "flex" }}>
