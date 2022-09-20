@@ -31,6 +31,7 @@ const ExampleDynamic = () => {
   const { data, schema } = sdk.createSchema({
     source: customerJsonSchema,
     target: leadJsonSchema,
+    dataToTransform: sourceToTransformation,
   });
 
   return (

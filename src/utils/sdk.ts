@@ -28,9 +28,11 @@ const generateEnum = (schema) => {
 export const createSchema = ({
   source,
   target,
+  dataToTransform,
 }: {
   source: any;
   target: any;
+  dataToTransform: any;
 }) => {
   const sourceEnum = generateEnum(source);
   const targetEnum = generateEnum(target);
@@ -57,6 +59,7 @@ export const createSchema = ({
           },
         },
       },
+      dataToTransform,
     },
   };
 
@@ -67,8 +70,6 @@ export const createSchema = ({
 };
 
 export const createRecipe = (data: any) => {
-  console.log("data", data);
-
   return data.keys.reduce(
     //@ts-ignore
     (acc, { source, target }) => {
