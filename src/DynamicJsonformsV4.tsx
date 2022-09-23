@@ -5,7 +5,9 @@ import {
   materialCells,
 } from "@jsonforms/material-renderers";
 import { MonacoEditorControl } from "@fusebit/monaco-jsonforms";
-import { DynamicControl } from "./customRenderer/customRenderer";
+import { MappingRendererControl } from "./customRenderer/customRenderer";
+import SourceTableControl from "./SourceTable/SourceTable";
+import TransformedTableControl from "./TransformedTable/TransformedTable";
 
 interface Props {
   schema: any;
@@ -29,7 +31,9 @@ const DynamicJsonformsV4 = ({ uischema, data, schema, onSubmit }: Props) => {
             renderers={[
               ...materialRenderers,
               MonacoEditorControl,
-              DynamicControl,
+              MappingRendererControl,
+              SourceTableControl,
+              TransformedTableControl,
             ]}
             onChange={(data) => {
               if ((data?.errors || []).length > 0) {

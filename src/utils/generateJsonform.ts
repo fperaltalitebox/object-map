@@ -48,7 +48,6 @@ export const generateJsonform = (
         enum: mapObjectEnum,
       },
     };
-    console.log(schemaProperties);
 
     const uiSchemaElements = {
       type: "HorizontalLayout",
@@ -73,7 +72,6 @@ export const generateJsonform = (
     };
     uischema.elements.push(uiSchemaElements);
   });
-  console.log(schema, uischema);
 
   return { schema, uischema };
 };

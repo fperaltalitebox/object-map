@@ -25,22 +25,46 @@ const generateEnum = (schema) => {
   return schemaEnum;
 };
 
+export const getKeyByUiSchemaType = (uischema, type: string) => {
+  let objectKey = null;
+
+  Object.keys(dot.dot(uischema)).forEach((element) => {
+    if (element.includes("type") && dot.pick(element, uischema) === type) {
+      const scopePicker = element.replace("type", "scope");
+      const scope = dot.pick(scopePicker, uischema);
+      const splittedScope = scope.split("/");
+      const key = splittedScope[splittedScope.length - 1];
+      objectKey = key;
+    }
+  });
+
+  return objectKey;
+};
+
 export const createSchema = ({
   source,
   target,
+  uischema,
   dataToTransform,
 }: {
   source: any;
   target: any;
+  uischema: any;
   dataToTransform: any;
 }) => {
+  const dynamicObjectKey = getKeyByUiSchemaType(uischema, "Dynamic");
+  const sourceTableKey = getKeyByUiSchemaType(uischema, "SourceTable");
+  const TransformedTableKey = getKeyByUiSchemaType(
+    uischema,
+    "TransformedTable"
+  );
   const sourceEnum = generateEnum(source);
   const targetEnum = generateEnum(target);
 
   const schema = {
     type: "object",
     properties: {
-      keys: {
+      [dynamicObjectKey]: {
         type: "array",
         items: {
           type: "object",
@@ -59,20 +83,32 @@ export const createSchema = ({
           },
         },
       },
-      dataToTransform,
+      ...(sourceTableKey && { [sourceTableKey]: { type: "object" } }),
+      ...(TransformedTableKey && { [TransformedTableKey]: { type: "object" } }),
     },
   };
 
+  console.log(schema);
+
   return {
     schema: schema,
-    data: { keys: sourceEnum.map((val) => ({ source: val })) },
+    data: {
+      [dynamicObjectKey]: sourceEnum.map((source) => ({ source })),
+      [sourceTableKey]: dataToTransform,
+      [TransformedTableKey]: dataToTransform,
+    },
   };
 };
 
-export const createRecipe = (data: any) => {
-  return data.keys.reduce(
+export const createRecipe = (data: any, uischema) => {
+  const dynamicObjectKey = getKeyByUiSchemaType(uischema, "Dynamic");
+  return data[dynamicObjectKey].reduce(
     //@ts-ignore
     (acc, { source, target }) => {
+      if (!target?.value) {
+        return acc;
+      }
+
       acc[source.value] = target.value;
       return acc;
     },

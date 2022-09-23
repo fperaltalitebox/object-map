@@ -17,6 +17,14 @@ const uischema = {
       type: "Dynamic",
       scope: "#/properties/keys",
     },
+    {
+      type: "SourceTable",
+      scope: "#/properties/sourceTable",
+    },
+    {
+      type: "TransformedTable",
+      scope: "#/properties/transformedTable",
+    },
   ],
 };
 
@@ -24,13 +32,15 @@ const ExampleDynamic = () => {
   const [recipe, setRecipe] = useState();
 
   const handleSubmit = (data: any) => {
-    const recipe = sdk.createRecipe(data);
+    console.log(data);
+    const recipe = sdk.createRecipe(data, uischema);
     setRecipe(recipe);
   };
 
   const { data, schema } = sdk.createSchema({
     source: customerJsonSchema,
     target: leadJsonSchema,
+    uischema,
     dataToTransform: sourceToTransformation,
   });
 

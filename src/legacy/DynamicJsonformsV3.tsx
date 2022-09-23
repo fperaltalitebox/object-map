@@ -35,7 +35,6 @@ const DynamicJsonformsV3 = ({
     Object.keys(dot.dot(baseObject.properties)).forEach(async (key) => {
       const splittedKey = key.split(".");
       const objectKey = splittedKey.slice(0, splittedKey.length - 1).join("/");
-      console.log(objectKey);
       const uiSchemaElements = {
         type: "HorizontalLayout",
         elements: [
