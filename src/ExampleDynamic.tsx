@@ -14,16 +14,16 @@ const uischema = {
   type: "VerticalLayout",
   elements: [
     {
-      type: "Dynamic",
-      scope: "#/properties/keys",
-    },
-    {
       type: "SourceTable",
       scope: "#/properties/sourceTable",
     },
     {
       type: "TransformedTable",
       scope: "#/properties/transformedTable",
+    },
+    {
+      type: "Dynamic",
+      scope: "#/properties/keys",
     },
   ],
 };
@@ -32,7 +32,6 @@ const ExampleDynamic = () => {
   const [recipe, setRecipe] = useState();
 
   const handleSubmit = (data: any) => {
-    console.log(data);
     const recipe = sdk.createRecipe(data, uischema);
     setRecipe(recipe);
   };

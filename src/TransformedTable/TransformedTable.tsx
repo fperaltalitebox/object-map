@@ -29,7 +29,7 @@ const TransformedTableVanillaRenderer = ({ data }: ControlProps) => {
     <div style={{ width: "1100px", margin: "0 auto" }}>
       {Object.keys(tranformedTable).length > 0 && (
         <>
-          <h2 style={{ width: "max-content" }}>Transformed Table</h2>
+          <h2 style={{ width: "max-content" }}>Transformed Data</h2>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>

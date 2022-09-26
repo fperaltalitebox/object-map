@@ -19,7 +19,7 @@ const SourceTableVanillaRenderer = ({ data }: ControlProps) => {
 
   return (
     <div style={{ width: "1100px", margin: "0 auto" }}>
-      <h2 style={{ width: "max-content" }}>Base Table</h2>
+      <h2 style={{ width: "max-content" }}>Source Data</h2>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
