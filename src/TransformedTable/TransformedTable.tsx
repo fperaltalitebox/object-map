@@ -17,17 +17,18 @@ const TransformedTableVanillaRenderer = ({ data }: ControlProps) => {
   const ctx = useJsonForms();
 
   const tranformedTable: any = useMemo(() => {
-    const objectKey = sdk.getKeyByUiSchemaType(ctx.core.uischema, "Dynamic");
-    const recipe = sdk.createRecipe(
-      { [objectKey]: ctx.core.data[objectKey] },
-      ctx.core.uischema
-    );
-    return dot.transform(dot.dot(recipe), data);
-  }, [ctx.core.data, ctx.core.uischema, data]);
+    const recipe = sdk.createRecipe(ctx.core.data);
+
+    if (recipe) {
+      return dot.transform(dot.dot(recipe), data);
+    }
+
+    return [];
+  }, [ctx.core.data, data]);
 
   return (
     <div style={{ width: "1100px", margin: "0 auto" }}>
-      {Object.keys(tranformedTable).length > 0 && (
+      {Object.keys(tranformedTable || []).length > 0 && (
         <>
           <h2 style={{ width: "max-content" }}>Transformed Data</h2>
           <TableContainer component={Paper}>

@@ -32,7 +32,7 @@ const ExampleDynamic = () => {
   const [recipe, setRecipe] = useState();
 
   const handleSubmit = (data: any) => {
-    const recipe = sdk.createRecipe(data, uischema);
+    const recipe = sdk.createRecipe(data);
     setRecipe(recipe);
   };
 

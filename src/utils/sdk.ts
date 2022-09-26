@@ -88,21 +88,25 @@ export const createSchema = ({
     },
   };
 
-  console.log(schema);
-
   return {
     schema: schema,
     data: {
       [dynamicObjectKey]: sourceEnum.map((source) => ({ source })),
       [sourceTableKey]: dataToTransform,
       [TransformedTableKey]: dataToTransform,
+      baseKeys: {
+        dynamicObjectKey: dynamicObjectKey,
+      },
     },
   };
 };
 
-export const createRecipe = (data: any, uischema) => {
-  const dynamicObjectKey = getKeyByUiSchemaType(uischema, "Dynamic");
-  return data[dynamicObjectKey].reduce(
+export const createRecipe = (data: any) => {
+  if (!data.baseKeys.dynamicObjectKey) {
+    return;
+  }
+
+  return data[data.baseKeys.dynamicObjectKey].reduce(
     //@ts-ignore
     (acc, { source, target }) => {
       if (!target?.value) {
