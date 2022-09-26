@@ -44,7 +44,7 @@ const TransformedTableVanillaRenderer = ({ data }: ControlProps) => {
               </TableHead>
               <TableBody>
                 <TableRow>
-                  {Object.keys(tranformedTable).map((val) => (
+                  {Object.keys(dot.dot(tranformedTable)).map((val) => (
                     <TableCell key={val}>
                       {JSON.stringify(dot.pick(val, tranformedTable))}
                     </TableCell>
