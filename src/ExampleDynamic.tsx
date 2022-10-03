@@ -6,9 +6,9 @@ import {
   sourceToTransformation,
 } from "./constants";
 import DynamicJsonformsV4 from "./DynamicJsonformsV4";
-import * as sdk from "./utils/sdk";
 import dot from "dot-object";
 import { MonacoEditor } from "@fusebit/monaco-jsonforms";
+import * as sdk from "./utils/sdk";
 
 const uischema = {
   type: "VerticalLayout",
@@ -24,6 +24,10 @@ const uischema = {
     {
       type: "Dynamic",
       scope: "#/properties/keys",
+    },
+    {
+      type: "Function",
+      scope: "#/properties/transformation",
     },
   ],
 };

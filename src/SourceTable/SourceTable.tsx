@@ -9,6 +9,7 @@ import {
   TableHead,
   TableContainer,
   Paper,
+  Typography,
 } from "@material-ui/core";
 import dot from "dot-object";
 
@@ -19,15 +20,18 @@ const SourceTableVanillaRenderer = ({ data }: ControlProps) => {
 
   return (
     <div style={{ width: "1100px", margin: "0 auto" }}>
-      <h2 style={{ width: "max-content" }}>Source Data</h2>
+      <Typography
+        variant="h5"
+        style={{ width: "max-content", margin: "16px 0" }}
+      >
+        Source Data
+      </Typography>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
               {Object.keys(baseTable).map((val) => (
-                <TableCell style={{ fontWeight: 600 }} key={val}>
-                  {val}
-                </TableCell>
+                <TableCell key={val}>{val}</TableCell>
               ))}
             </TableRow>
           </TableHead>

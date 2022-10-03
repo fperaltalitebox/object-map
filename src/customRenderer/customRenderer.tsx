@@ -8,6 +8,7 @@ import {
   uiTypeIs,
 } from "@jsonforms/core";
 import Row from "./Row";
+import { Typography } from "@material-ui/core";
 
 interface Enum {
   value: string;
@@ -48,10 +49,12 @@ const MappingRendererControlVanillaRenderer = ({
   return (
     <div style={{ width: "1100px", margin: "0 auto" }}>
       <div style={{ display: "flex" }}>
-        <h2 style={{ marginRight: "auto" }}>
+        <Typography variant="h5" style={{ margin: "16px auto 16px 0" }}>
           {schema.items.properties.source.title}
-        </h2>
-        <h2>{schema.items.properties.target.title}</h2>
+        </Typography>
+        <Typography variant="h5" style={{ margin: "16px 0" }}>
+          {schema.items.properties.target.title}
+        </Typography>
       </div>
       {schema.items.properties.source.enum.map((e: any) => {
         return (

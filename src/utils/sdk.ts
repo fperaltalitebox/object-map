@@ -95,7 +95,9 @@ export const createSchema = ({
       [sourceTableKey]: dataToTransform,
       [TransformedTableKey]: dataToTransform,
       baseKeys: {
-        dynamicObjectKey: dynamicObjectKey,
+        dynamicObjectKey,
+        sourceTableKey,
+        TransformedTableKey,
       },
     },
   };
@@ -118,4 +120,11 @@ export const createRecipe = (data: any) => {
     },
     {}
   );
+};
+
+export const transformData = (data: any, sourceData: any) => {
+  const recipe = createRecipe(data);
+  const transformedData = dot.transform(dot.dot(recipe), sourceData);
+
+  return transformedData;
 };

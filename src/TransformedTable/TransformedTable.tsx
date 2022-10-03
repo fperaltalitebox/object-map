@@ -9,6 +9,7 @@ import {
   TableHead,
   TableContainer,
   Paper,
+  Typography,
 } from "@material-ui/core";
 import dot from "dot-object";
 import * as sdk from "../utils/sdk";
@@ -17,28 +18,25 @@ const TransformedTableVanillaRenderer = ({ data }: ControlProps) => {
   const ctx = useJsonForms();
 
   const tranformedTable: any = useMemo(() => {
-    const recipe = sdk.createRecipe(ctx.core.data);
-
-    if (recipe) {
-      return dot.transform(dot.dot(recipe), data);
-    }
-
-    return [];
+    return sdk.transformData(ctx.core.data, data) || [];
   }, [ctx.core.data, data]);
 
   return (
     <div style={{ width: "1100px", margin: "0 auto" }}>
       {Object.keys(tranformedTable || []).length > 0 && (
         <>
-          <h2 style={{ width: "max-content" }}>Transformed Data</h2>
+          <Typography
+            variant="h5"
+            style={{ width: "max-content", margin: "16px 0" }}
+          >
+            Transformed Data
+          </Typography>
           <TableContainer component={Paper}>
             <Table>
               <TableHead>
                 <TableRow>
                   {Object.keys(dot.dot(tranformedTable)).map((val) => (
-                    <TableCell style={{ fontWeight: 600 }} key={val}>
-                      {val}
-                    </TableCell>
+                    <TableCell key={val}>{val}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
