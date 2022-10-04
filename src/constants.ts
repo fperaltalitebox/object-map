@@ -1,4 +1,4 @@
-// this schema is the source
+// source
 export const customerJsonSchema = {
   type: "object",
   title: "Budgetly Customer",
@@ -31,7 +31,7 @@ export const customerJsonSchema = {
   },
 };
 
-// this schema is the target
+// target
 export const leadJsonSchema = {
   type: "object",
   title: "Salesforce Lead",
@@ -77,7 +77,7 @@ export const leadJsonSchema = {
   },
 };
 
-// this is some sample data that will get transformed
+// source data
 export const sourceToTransformation = {
   Title: "Mr",
   First: "Shehzad",

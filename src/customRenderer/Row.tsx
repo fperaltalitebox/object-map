@@ -5,7 +5,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
 } from "@material-ui/core";
 
 interface Enum {
@@ -14,18 +13,18 @@ interface Enum {
 }
 
 interface Props {
-  source: Enum;
-  targetEnum: Enum[];
+  target: Enum;
+  sourceEnum: Enum[];
   onChange: (source: string, target: Enum) => void;
 }
 
-const Row = ({ source, targetEnum, onChange }: Props) => {
+const Row = ({ target, sourceEnum, onChange }: Props) => {
   const [targetValue, setTargetValue] = useState<string>("");
 
   return (
     <div style={{ display: "flex", marginBottom: "20px" }}>
       <TextField
-        label={source?.label || source.value}
+        label={target?.label || target.value}
         aria-readonly="true"
         disabled
         style={{ marginRight: "40px", width: "100%", border: "none" }}
@@ -37,13 +36,13 @@ const Row = ({ source, targetEnum, onChange }: Props) => {
           value={targetValue}
           onChange={(e: any) => {
             setTargetValue(e.target.value);
-            const target = targetEnum.find(
+            const source = sourceEnum.find(
               (val) => val.value === e.target.value
             );
             onChange(source.value, target);
           }}
         >
-          {targetEnum.map((e) => (
+          {sourceEnum.map((e) => (
             <MenuItem key={e.value} value={e.value}>
               {e?.label || e.value}
             </MenuItem>

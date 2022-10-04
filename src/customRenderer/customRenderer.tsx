@@ -42,7 +42,13 @@ const MappingRendererControlVanillaRenderer = ({
 
   const handleRowChange = (sourceValue: string, target: Enum) => {
     const i = data.findIndex((row: any) => row.source.value === sourceValue);
-    data[i] = { ...data[i], target };
+    console.log(data, sourceValue);
+    if (i === -1) {
+      return;
+    }
+    console.log(i);
+
+    data[i] = { source: target, target: data[i]?.source };
     handleChange(path, data);
   };
 
@@ -50,18 +56,18 @@ const MappingRendererControlVanillaRenderer = ({
     <div style={{ width: "1100px", margin: "0 auto" }}>
       <div style={{ display: "flex" }}>
         <Typography variant="h5" style={{ margin: "16px auto 16px 0" }}>
-          {schema.items.properties.source.title}
+          {schema.items.properties.target.title} (TARGET)
         </Typography>
         <Typography variant="h5" style={{ margin: "16px 0" }}>
-          {schema.items.properties.target.title}
+          {schema.items.properties.source.title} (SOURCE)
         </Typography>
       </div>
-      {schema.items.properties.source.enum.map((e: any) => {
+      {schema.items.properties.target.enum.map((e: any) => {
         return (
           <Row
             key={e.value}
-            source={e}
-            targetEnum={schema.items.properties.target.enum}
+            target={e}
+            sourceEnum={schema.items.properties.source.enum}
             onChange={handleRowChange}
           />
         );
