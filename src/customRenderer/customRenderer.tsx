@@ -5,7 +5,7 @@ import {
   ControlProps,
   JsonSchema,
   and,
-  uiTypeIs,
+  uiTypeIs
 } from "@jsonforms/core";
 import Row from "./Row";
 import { Typography } from "@material-ui/core";
@@ -42,13 +42,14 @@ const MappingRendererControlVanillaRenderer = ({
 
   const handleRowChange = (sourceValue: string, target: Enum) => {
     const i = data.findIndex((row: any) => row.source.value === sourceValue);
-    console.log(data, sourceValue);
+    console.log("sourceValue", sourceValue);
+    console.log("target", target);
     if (i === -1) {
-      return;
-    }
-    console.log(i);
+      data[i] = { source: target };
 
-    data[i] = { source: target, target: data[i]?.source };
+    } else {
+      data[i] = { source: target, target: data[i]?.source };
+    }
     handleChange(path, data);
   };
 
@@ -83,13 +84,13 @@ const MappingRendererControlRenderer = withJsonFormsControlProps(
 
 const MappingRendererControl = {
   tester: MappingRendererControlTester,
-  renderer: MappingRendererControlRenderer,
+  renderer: MappingRendererControlRenderer
 };
 
 export {
   MappingRendererControl,
   MappingRendererControlTester,
-  MappingRendererControlRenderer,
+  MappingRendererControlRenderer
 };
 
 export default MappingRendererControl;

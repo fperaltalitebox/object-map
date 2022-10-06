@@ -25,10 +25,10 @@ const uischema = {
       type: "Dynamic",
       scope: "#/properties/keys",
     },
-    {
-      type: "Function",
-      scope: "#/properties/transformation",
-    },
+    // {
+    //   type: "Function",
+    //   scope: "#/properties/transformation",
+    // },
   ],
 };
 

@@ -4,7 +4,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
+  TextField
 } from "@material-ui/core";
 
 interface Enum {
@@ -36,15 +36,19 @@ const Row = ({ target, sourceEnum, onChange }: Props) => {
           value={targetValue}
           onChange={(e: any) => {
             setTargetValue(e.target.value);
-            const source = sourceEnum.find(
-              (val) => val.value === e.target.value
-            );
-            onChange(source.value, target);
+            const source = sourceEnum.find(val => val.value === e.target.value);
+            onChange(source?.value || "", target);
           }}
         >
-          {sourceEnum.map((e) => (
+          {[
+            {
+              value: "",
+              label: "None"
+            },
+            ...sourceEnum
+          ].map(e => (
             <MenuItem key={e.value} value={e.value}>
-              {e?.label || e.value}
+              {e?.label || e?.value}
             </MenuItem>
           ))}
         </Select>

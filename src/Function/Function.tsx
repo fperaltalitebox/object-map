@@ -5,7 +5,7 @@ import dot from "dot-object";
 import { MonacoEditor } from "@fusebit/monaco-jsonforms";
 import * as sdk from "../utils/sdk";
 import prettier from "prettier";
-import parserBabel from 'prettier/parser-babel';
+import parserBabel from "prettier/parser-babel";
 
 const FunctionVanillaRenderer = ({ data }: ControlProps) => {
   const ctx = useJsonForms();
@@ -14,19 +14,27 @@ const FunctionVanillaRenderer = ({ data }: ControlProps) => {
   useEffect(() => {
     const recipe = sdk.createRecipe(ctx.core.data) || [];
     let objectToReturn = {};
-    Object.keys(recipe || []).forEach((key) => {
+    Object.keys(recipe || []).forEach(key => {
       const mapToKey = dot.pick(key, dot.object(recipe));
       const obj = dot.object({ [mapToKey]: `#input.${key}#` });
-      
+
       objectToReturn = {
         ...objectToReturn,
-        ...obj,
+        ...obj
       };
     });
-    const stringifiedObj = JSON.stringify(objectToReturn)
-    const prettyObj = prettier.format(stringifiedObj, { parser: "json5", plugins: [parserBabel] });
+    const stringifiedObj = JSON.stringify(objectToReturn);
+    const prettyObj = prettier.format(stringifiedObj, {
+      parser: "json5",
+      plugins: [parserBabel]
+    });
     const outputFunction = `(input) => { return ${prettyObj} }`;
-    const prettyOutputFunction = prettier.format(outputFunction, { parser: "babel", plugins: [parserBabel] }).split('#"').join("").split('"#').join("");
+    const prettyOutputFunction = prettier
+      .format(outputFunction, { parser: "babel", plugins: [parserBabel] })
+      .split('#"')
+      .join("")
+      .split('"#')
+      .join("");
 
     setFunctionValue(prettyOutputFunction);
   }, [ctx.core.data]);
@@ -37,11 +45,15 @@ const FunctionVanillaRenderer = ({ data }: ControlProps) => {
         <MonacoEditor
           isExpandable={true}
           value={functionValue}
-          onChange={(val) => {
+          onChange={val => {
             setFunctionValue(val);
             const func = eval(val);
-            console.log(JSON.stringify(func?.(ctx.core.data[ctx.core.data.baseKeys.sourceTableKey])));
-        }}
+            console.log(
+              JSON.stringify(
+                func?.(ctx.core.data[ctx.core.data.baseKeys.sourceTableKey])
+              )
+            );
+          }}
         />
       </div>
     </div>
@@ -53,7 +65,7 @@ const FunctionRenderer = withJsonFormsControlProps(FunctionVanillaRenderer);
 
 const FunctionControl = {
   tester: FunctionTester,
-  renderer: FunctionRenderer,
+  renderer: FunctionRenderer
 };
 
 export { FunctionControl, FunctionTester, FunctionRenderer };

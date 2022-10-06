@@ -9,7 +9,7 @@ import {
   TableHead,
   TableContainer,
   Paper,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import dot from "dot-object";
 import * as sdk from "../utils/sdk";
@@ -35,14 +35,14 @@ const TransformedTableVanillaRenderer = ({ data }: ControlProps) => {
             <Table>
               <TableHead>
                 <TableRow>
-                  {Object.keys(dot.dot(tranformedTable)).map((val) => (
+                  {Object.keys(dot.dot(tranformedTable)).map(val => (
                     <TableCell key={val}>{val}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
                 <TableRow>
-                  {Object.keys(dot.dot(tranformedTable)).map((val) => (
+                  {Object.keys(dot.dot(tranformedTable)).map(val => (
                     <TableCell key={val}>
                       {JSON.stringify(dot.pick(val, tranformedTable))}
                     </TableCell>
@@ -64,13 +64,13 @@ const TransformedTableRenderer = withJsonFormsControlProps(
 
 const TransformedTableControl = {
   tester: TransformedTableTester,
-  renderer: TransformedTableRenderer,
+  renderer: TransformedTableRenderer
 };
 
 export {
   TransformedTableControl,
   TransformedTableTester,
-  TransformedTableRenderer,
+  TransformedTableRenderer
 };
 
 export default TransformedTableControl;

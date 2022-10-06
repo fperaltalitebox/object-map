@@ -17,7 +17,7 @@ const parseKey = (key: string) => {
 const generateEnum = (schema: any) => {
   const schemaEnum: any = [];
 
-  Object.keys(dot.dot(schema.properties)).forEach((key) => {
+  Object.keys(dot.dot(schema.properties)).forEach(key => {
     const value = parseKey(key);
     const baseKey = getKeyWithoutLastElement(key);
     const objectProperties = dot.pick(baseKey, schema.properties);
@@ -34,7 +34,7 @@ const generateEnum = (schema: any) => {
 export const getKeyByUiSchemaType = (uischema, type: string) => {
   let objectKey = null;
 
-  Object.keys(dot.dot(uischema)).forEach((element) => {
+  Object.keys(dot.dot(uischema)).forEach(element => {
     if (element.includes("type") && dot.pick(element, uischema) === type) {
       const scopePicker = element.replace("type", "scope");
       const scope = dot.pick(scopePicker, uischema);
@@ -51,7 +51,7 @@ export const createSchema = ({
   source,
   target,
   uischema,
-  dataToTransform,
+  dataToTransform
 }: {
   source: any;
   target: any;
@@ -64,7 +64,9 @@ export const createSchema = ({
     uischema,
     "TransformedTable"
   );
-  const sourceEnum = generateEnum(source);
+  const sourceEnum = [
+    ...generateEnum(source),
+  ];
   const targetEnum = generateEnum(target);
 
   const schema = {
@@ -79,33 +81,33 @@ export const createSchema = ({
             source: {
               type: "object",
               title: source?.title,
-              enum: sourceEnum,
+              enum: sourceEnum
             },
             target: {
               type: "object",
               title: target?.title,
-              enum: targetEnum,
-            },
-          },
-        },
+              enum: targetEnum
+            }
+          }
+        }
       },
       ...(sourceTableKey && { [sourceTableKey]: { type: "object" } }),
-      ...(TransformedTableKey && { [TransformedTableKey]: { type: "object" } }),
-    },
+      ...(TransformedTableKey && { [TransformedTableKey]: { type: "object" } })
+    }
   };
 
   return {
     schema: schema,
     data: {
-      [dynamicObjectKey]: sourceEnum.map((source) => ({ source })),
+      [dynamicObjectKey]: sourceEnum.map(source => ({ source })),
       [sourceTableKey]: dataToTransform,
       [TransformedTableKey]: dataToTransform,
       baseKeys: {
         dynamicObjectKey,
         sourceTableKey,
-        TransformedTableKey,
-      },
-    },
+        TransformedTableKey
+      }
+    }
   };
 };
 

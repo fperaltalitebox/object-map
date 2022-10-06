@@ -5,7 +5,7 @@ export const customerJsonSchema = {
   properties: {
     Title: {
       type: "string",
-      label: "Budgetly Title",
+      // label: "Budgetly Title",
     },
     First: {
       type: "string",
@@ -22,7 +22,7 @@ export const customerJsonSchema = {
           properties: {
             here: {
               type: "string",
-              label: "Budgetly Nested Property",
+              // label: "Budgetly Nested Property",
             },
           },
         },
@@ -48,31 +48,6 @@ export const leadJsonSchema = {
     },
     Company: {
       type: "string",
-    },
-    Nested: {
-      Keys: {
-        properties: {
-          oneNestedKey: {
-            type: "string",
-          },
-          anotherNestedKey: {
-            type: "object",
-            NestedInsideNestedKey: {
-              moreNesting: {
-                properties: {
-                  superNestedFirstKey: {
-                    type: "string",
-                  },
-                  superNestedSecondKey: {
-                    type: "string",
-                    label: "Salesforce Nested Label",
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
     },
   },
 };
